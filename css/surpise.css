@@ -1,0 +1,50 @@
+
+body {
+  background-color: rgb(231, 202, 202);
+  background-attachment: fixed;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+img{
+  border: 5px solid rgb(202, 127, 139);
+  box-shadow: 5px 5px 5px rgb(151, 151, 151);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  font-size: clamp(5px, 5vw, 10rem);
+  margin: 20px;
+  cursor: pointer;
+  background-color: rgba(202, 127, 140, 0);
+}
+
+.main-header {
+  text-align: center;
+  font-size: clamp(5px, 3vw, 10rem);
+  margin-top: 5px;
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
+#second {
+margin-top: 150px;}
+
+.ask {
+  position: relative;
+  display: flex;
+  flex: 0;
+  flex-direction: column;
+  align-items: center;
+}
+
