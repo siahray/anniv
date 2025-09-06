@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Heart Lock</title>
+</head>
+
+<body>
+    <div class="lock-container" style="position:relative;">
+        <svg class="lock-svg" viewBox="0 0 520 600" style="display:block;">
+            <!-- Shackle with shadow -->
+            <path d="M180,260 Q180,160 260,160 Q340,160 340,260" fill="none" stroke="#ffb6c1" stroke-width="28"
+                stroke-linecap="round" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.1))" />
+            <!-- Heart body with enhanced gradient -->
+            <path d="M260,560
+                C 20,400 40,200 260,260
+                C 480,200 500,400 260,560
+                Z" fill="url(#heartGradient)" stroke="#ffb6c1" stroke-width="6" />
+
+            <!-- Add gradient definition -->
+            <defs>
+                <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ffd1e3" />
+                    <stop offset="100%" style="stop-color:#ffb6c1" />
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="overlay">
+            <div class="lock-title">The Day We Got Together</div>
+            <div class="digits-row" id="digitsRow"></div>
+        </div>
+        <div id="unlockMsg"></div>
+    </div>
+    <script>
+        const password = [0, 9, 1, 8, 2, 3];
+        const digitsRow = document.getElementById('digitsRow');
+        const unlockMsg = document.getElementById('unlockMsg');
+        let digits = [0, 0, 0, 0, 0, 0];
+
+        function renderDigits() {
+            digitsRow.innerHTML = '';
+            digits.forEach((digit, idx) => {
+                const box = document.createElement('div');
+                box.className = 'digit-box';
+                box.innerHTML = `
+                    <button class="arrow-btn" onclick="changeDigit(${idx}, 1)">&#9650;</button>
+                    <div class="digit" id="digit${idx}">${digit}</div>
+                    <button class="arrow-btn" onclick="changeDigit(${idx}, -1)">&#9660;</button>
+                `;
+                digitsRow.appendChild(box);
+            });
+        }
+
+        window.changeDigit = function (idx, delta) {
+            digits[idx] = (digits[idx] + delta + 10) % 10;
+            renderDigits();
+            checkUnlock();
+        }
+
+        function checkUnlock() {
+            if (digits.every((d, i) => d === password[i])) {
+                unlockMsg.innerHTML = '<div class="unlocked">Unlocked! 💖</div>';
+                document.querySelector('.lock-container').classList.add('unlocked-state');
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 3000); // 3 seconds delay for animation/message
+            } else {
+                unlockMsg.innerHTML = '';
+                document.querySelector('.lock-container').classList.remove('unlocked-state');
+            }
+        }
+
+        renderDigits();
+    </script>
+</body>
+
+</html>
